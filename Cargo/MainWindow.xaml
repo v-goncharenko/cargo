@@ -1,12 +1,72 @@
-﻿<Window x:Class="Cargo.MainWindow"
+﻿<Window x:Name="mainWindow" 
+    x:Class="Cargo.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Prop="clr-namespace:Cargo.Properties"
         xmlns:local="clr-namespace:Cargo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Калькулятор франшиз при страховании грузов. СК Пари"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="CanResizeWithGrip"
+        Closed="Window_Closed"
+        Icon="cargo.ico"
+        MinWidth="400" WindowStartupLocation="CenterScreen">
+    <StackPanel>
+        <GroupBox Header="Введите данные">
     <Grid>
-        
-    </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width = "*" />
+            <ColumnDefinition Width = "*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+                    <RowDefinition Height = "Auto" />
+                    <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "Auto" />
+        </Grid.RowDefinitions>
+            <Label Content="Страховая сумма" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="insSumCombo" Grid.Row="0" Grid.Column="1"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Height="22" Width="200"
+                ItemsSource="{Binding Path=InsSums.DefaultView}"
+                DisplayMemberPath="descr"
+                SelectedValuePath="ID"/>
+            <Label Content="Базовый тариф (%)" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox x:Name="basicRateText" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                  Height="23" TextWrapping="NoWrap" Width="100"
+                 Text="0,1"/>
+            <Label Content="Тип франшизы" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="typeCombo" Grid.Row="2" Grid.Column="1"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Height="22" Width="140"
+                ItemsSource="{Binding Path=Types.DefaultView}"
+                DisplayMemberPath="descr"
+                SelectedValuePath="ID" />
+            <Label Content="Сумма франшизы, руб" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <ComboBox x:Name="sizeCombo" Grid.Row="3" Grid.Column="1"
+                VerticalAlignment="Center" HorizontalAlignment="Left" Height="22" Width="140"
+                ItemsSource="{Binding Path=FranchiseSizes.DefaultView}"
+                DisplayMemberPath="size"
+                SelectedValuePath="ID" />
+        </Grid>
+        </GroupBox>
+        <Button Content="Рассчитать" Height="25" HorizontalAlignment="Right" Margin="0,0,20,5" Click="Button_Click"/>
+        <GroupBox x:Name="resultGroup" Header="Результат расчета" Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width = "Auto" />
+                    <ColumnDefinition Width = "*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height = "Auto" />
+                    <RowDefinition Height = "Auto" />
+                </Grid.RowDefinitions>
+                <Label Content="Итоговый страховй тариф (с учетом франшизы)" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <Label x:Name="FRLabel" Content="finalRate" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Поправочный коэффициент" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <Label x:Name="franchiseRateLabel" Content="franchiseRate" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Grid>
+        </GroupBox>
+    </StackPanel>
 </Window>
